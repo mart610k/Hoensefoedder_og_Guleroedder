@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoensefoedder_og_guleroedder", "Hoensefoedder_og_guleroedder\Hoensefoedder_og_guleroedder.csproj", "{ABC1D961-721E-4E70-A03E-193AC975AEBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABC1D961-721E-4E70-A03E-193AC975AEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC1D961-721E-4E70-A03E-193AC975AEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC1D961-721E-4E70-A03E-193AC975AEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC1D961-721E-4E70-A03E-193AC975AEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
