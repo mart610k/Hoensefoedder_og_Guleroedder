@@ -3,12 +3,12 @@
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Random;
+import org.json.JSONArray;
+import org.json.JSONException;
 
+import dk.hog.hoensefoedder_og_guleroedder.classes.Temperature;
 import dk.hog.hoensefoedder_og_guleroedder.enums.SensorType;
 
  public class MainActivity extends AppCompatActivity {
@@ -17,32 +17,51 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.SensorType;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Random rand = new Random();
+        // Initialising the Temperature class
+        Temperature temperatureClass = new Temperature(this);
+
+        // Initialization of the Textviews
+        //region temperature textviews
         TextView tempIn = findViewById(R.id.insideTemp);
+        TextView tempIndicatorIn = findViewById(R.id.insideTempIndicator);
         TextView tempOut = findViewById(R.id.outsideTemp);
-        final int[] i = {0};
-        //region Thread setup for Getting Data!
-        Thread test = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (i[0] < 5) {
-                    int ShowRand = rand.nextInt(100);
-                    tempIn.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            tempIn.setText(ShowRand + "° Celcius");
+        TextView tempIndicatorOut = findViewById(R.id.outsideTempIndicator);
+        //endregion
+
+        //region Thread setup for Temperature Data!
+
+        // Creation of the Temperature Thread
+        Thread temperatureThread = new Thread(() -> {
+            // Ensuring the thread always runs
+            while (true) {
+                // Get the Temperature data in a JsonArray
+                JSONArray testing = temperatureClass.GetTemp();
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Try to get the data of each specific object, and call the ShowOnGUI method based on location of sensor
+                        try {
+                            for(int i = 0; i < testing.length(); i++) {
+                                if(testing.getJSONObject(i).get("location") == "INSIDE"){
+                                    temperatureClass.ShowOnGUI(SensorType.TEMPERATURE,testing.getJSONObject(i).get("value"),tempIn,tempIndicatorIn);
+                                }
+                                else {
+                                    temperatureClass.ShowOnGUI(SensorType.TEMPERATURE,testing.getJSONObject(i).get("value"),tempOut,tempIndicatorOut);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
-                    i[0]++;
+                });
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
-        test.start();
+        temperatureThread.start();
         //endregion
     }
 }
