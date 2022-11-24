@@ -11,9 +11,15 @@ public class TemperatureLogic
     
     
     
-    public SensorResponse GetTemperatureForLocation(LocationType locationType)
+    public List<SensorResponse> GetTemperature()
     {
-        return null;
+        List<SensorResponse> response = new List<SensorResponse>();
+        
+        response.Add(new SensorResponse(23, LocationType.INSIDE));
+        response.Add(new SensorResponse(3, LocationType.OUTSIDE));
+
+        
+        return response;
     }
 
 

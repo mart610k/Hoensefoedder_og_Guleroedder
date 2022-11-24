@@ -27,9 +27,7 @@ public class TemperatureTask : BackgroundService
     {
         //Logic to Take readings
         Console.WriteLine("Take Reading");
-
-
-
+        
         return Task.FromResult("Done");
     }
 }

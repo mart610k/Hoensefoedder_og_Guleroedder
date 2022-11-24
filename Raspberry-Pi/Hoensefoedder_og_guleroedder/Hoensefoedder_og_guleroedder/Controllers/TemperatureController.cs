@@ -17,9 +17,11 @@ public class TemperatureController : ControllerBase
     private Random _random = new Random();
     
     [HttpGet("Teperature")]
-    public IActionResult GetTemperature([FromHeader] LocationType location)
+    public IActionResult GetTemperature()
     {
-        return Ok(_temperatureLogic.GetTemperatureForLocation(location));
+        
+        
+        return Ok(_temperatureLogic.GetTemperature());
     }
 }
 
