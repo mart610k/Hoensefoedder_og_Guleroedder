@@ -42,7 +42,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.SensorType;
                         // Try to get the data of each specific object, and call the ShowOnGUI method based on location of sensor
                         try {
                             for(int i = 0; i < testing.length(); i++) {
-                                if(testing.getJSONObject(i).get("location") == "INSIDE"){
+                                if(testing.getJSONObject(i).get("location").equals("INSIDE")){
                                     temperatureClass.ShowOnGUI(SensorType.TEMPERATURE,testing.getJSONObject(i).get("value"),tempIn,tempIndicatorIn);
                                 }
                                 else {

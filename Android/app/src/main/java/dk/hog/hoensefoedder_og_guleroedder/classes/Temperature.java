@@ -2,12 +2,14 @@ package dk.hog.hoensefoedder_og_guleroedder.classes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.hog.hoensefoedder_og_guleroedder.Datamodel.APIResponse;
 import dk.hog.hoensefoedder_og_guleroedder.R;
 import dk.hog.hoensefoedder_og_guleroedder.enums.SensorType;
 import dk.hog.hoensefoedder_og_guleroedder.interfaces.IGUI;
@@ -20,21 +22,14 @@ private Context context;
     }
 
     public JSONArray GetTemp(){
-
-
-
+        ApiCaller caller = new ApiCaller();
         JSONObject object = new JSONObject();
-        JSONArray objectArray = new JSONArray();
+        JSONArray objectArray = null;
         try {
-                object.put("location", "INSIDE");
-                object.put("value", 15.55f);
-                objectArray.put(object);
-                object = new JSONObject();
-                object.put("location", "OUTSIDE");
-                object.put("value", 4.26f);
-                objectArray.put(object);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            objectArray = caller.GetAPIData("GET","/temperature");
+        }
+        catch (Exception e) {
+            Log.i("Exception", e.toString());
         }
         return objectArray;
     }
@@ -46,11 +41,11 @@ private Context context;
         switch (type) {
             case TEMPERATURE:
                 data.setText(String.format("%.02f", Float.parseFloat(value.toString())) + context.getResources().getString(R.string.TEMPERATURE));
-                if(Float.parseFloat(value.toString()) > 30) {
+                if(Float.parseFloat(value.toString()) > 25) {
                     indicator.setText(R.string.high);
                     indicator.setBackgroundColor(context.getResources().getColor(R.color.red, null));
                 }
-                else if (Float.parseFloat(value.toString()) < 15) {
+                else if (Float.parseFloat(value.toString()) <= 0) {
                     indicator.setText(R.string.low);
                     indicator.setBackgroundColor(context.getResources().getColor(R.color.blue,null));
                 }
