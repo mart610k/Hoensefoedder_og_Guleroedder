@@ -41,7 +41,7 @@ private Context context;
         switch (type) {
             case TEMPERATURE:
                 data.setText(String.format("%.02f", Float.parseFloat(value.toString())) + context.getResources().getString(R.string.TEMPERATURE));
-                if(Float.parseFloat(value.toString()) > 25) {
+                if(Float.parseFloat(value.toString()) > 30) {
                     indicator.setText(R.string.high);
                     indicator.setBackgroundColor(context.getResources().getColor(R.color.red, null));
                 }
