@@ -93,7 +93,7 @@ void loop() {
       if (c == '\n' && currentLineIsBlank) {
         Serial.println(endpoint);
         
-        if(endpoint == "/tempreature"){
+        if(endpoint == "/temperature"){
           
          client.println("HTTP/1.1 200 OK");
         client.println("Content-Type: application/json");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hoensefoedder_og_guleroedder.DTO;
 using Hoensefoedder_og_guleroedder.Enum;
+using Hoensefoedder_og_guleroedder.Tasks;
 
 namespace Hoensefoedder_og_guleroedder.Logic;
 
@@ -15,8 +16,8 @@ public class TemperatureLogic{
     {
         List<SensorResponse> response = new List<SensorResponse>();
         
-        response.Add(new SensorResponse(_random.Next(-10,35), LocationType.INSIDE));
-        response.Add(new SensorResponse(_random.Next(-10,35), LocationType.OUTSIDE));
+        response.Add(new SensorResponse(FindAverageTemperature(TemperatureTask.Inside.ToList()), LocationType.INSIDE));
+        response.Add(new SensorResponse(FindAverageTemperature(TemperatureTask.Outside.ToList()), LocationType.OUTSIDE));
         return response;
     }
 
