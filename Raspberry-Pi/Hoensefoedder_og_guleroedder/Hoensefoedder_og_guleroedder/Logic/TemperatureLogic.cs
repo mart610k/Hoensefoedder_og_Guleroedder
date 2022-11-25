@@ -6,19 +6,17 @@ using Hoensefoedder_og_guleroedder.Enum;
 
 namespace Hoensefoedder_og_guleroedder.Logic;
 
-public class TemperatureLogic
-{
+public class TemperatureLogic{
     
+    private Random _random = new Random();
     
     
     public List<SensorResponse> GetTemperature()
     {
         List<SensorResponse> response = new List<SensorResponse>();
         
-        response.Add(new SensorResponse(23, LocationType.INSIDE));
-        response.Add(new SensorResponse(3, LocationType.OUTSIDE));
-
-        
+        response.Add(new SensorResponse(_random.Next(-10,35), LocationType.INSIDE));
+        response.Add(new SensorResponse(_random.Next(-10,35), LocationType.OUTSIDE));
         return response;
     }
 

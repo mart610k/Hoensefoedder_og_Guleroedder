@@ -9,18 +9,16 @@ namespace Hoensefoedder_og_guleroedder.Controllers
     
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class TemperatureController : ControllerBase
 {
     private TemperatureLogic _temperatureLogic = new TemperatureLogic();
     
     private Random _random = new Random();
     
-    [HttpGet("Teperature")]
+    [HttpGet]
     public IActionResult GetTemperature()
     {
-        
-        
         return Ok(_temperatureLogic.GetTemperature());
     }
 }
