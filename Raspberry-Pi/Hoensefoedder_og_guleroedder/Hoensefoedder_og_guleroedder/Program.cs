@@ -20,7 +20,7 @@ namespace Hoensefoedder_og_guleroedder
                 }).ConfigureServices(services =>
                 {
                     services.AddSwaggerGen();
-                    services.AddHostedService<TemperatureTask>();
+                    services.AddHostedService<DHTTask>();
                 });
     }
 }

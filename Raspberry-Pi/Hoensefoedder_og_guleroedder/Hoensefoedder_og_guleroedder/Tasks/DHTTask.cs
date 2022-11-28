@@ -13,16 +13,12 @@ using Hoensefoedder_og_guleroedder.Enum;
 
 namespace Hoensefoedder_og_guleroedder.Tasks;
 
-public class TemperatureTask : BackgroundService
+public class DHTTask : BackgroundService
 {
-    public static Queue<float> Inside = new Queue<float>();
+    public static Queue<DHTResponse> Inside = new Queue<DHTResponse>();
 
-    public static Queue<float> Outside = new Queue<float>();
-
+    public static Queue<DHTResponse> Outside = new Queue<DHTResponse>();
     
-    
-    
-
     protected override async Task<Task> ExecuteAsync(CancellationToken stoppingToken)
     {
         while (true)
@@ -43,16 +39,14 @@ public class TemperatureTask : BackgroundService
         HttpClient client = new HttpClient();
 
 
-        HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/temperature");
+        HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/dht");
 
         Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
 
-        List<SensorResponse> responses = await responseMessage.Content.ReadFromJsonAsync<List<SensorResponse>>();
+        List<DHTResponse> responses = await responseMessage.Content.ReadFromJsonAsync<List<DHTResponse>>();
 
-        foreach (SensorResponse response in responses)
+        foreach (DHTResponse response in responses)
         {
-            
-        
             switch (response.Location)
             {
                 case LocationType.OUTSIDE:
@@ -60,7 +54,8 @@ public class TemperatureTask : BackgroundService
                     {
                         Outside.Dequeue();
                     }
-                    Outside.Enqueue(response.Value);
+
+                    Outside.Enqueue(response);
 
                     break;
                 case LocationType.INSIDE:
@@ -68,14 +63,12 @@ public class TemperatureTask : BackgroundService
                     {
                         Inside.Dequeue();
                     }
-                    Inside.Enqueue(response.Value);
 
+                    Inside.Enqueue(response);
                     break;
             }
         }
-        
-        
-        
+
         return Task.FromResult("Done");
     }
 }
