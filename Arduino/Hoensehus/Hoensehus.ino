@@ -21,13 +21,13 @@ void setup() {
   
   // put your setup code here, to run once:
    Serial.begin(9600);
-   while (!Serial) {
+   //while (!Serial) {
 
 
-    ; // wait for serial port to connect. Needed for native USB port only
+    //; // wait for serial port to connect. Needed for native USB port only
 
 
-  }
+  //}
   Serial.println("Initialize Ethernet with DHCP:");
 
 

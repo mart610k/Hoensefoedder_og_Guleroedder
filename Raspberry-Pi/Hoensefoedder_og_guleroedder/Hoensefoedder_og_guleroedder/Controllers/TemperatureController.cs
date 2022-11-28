@@ -6,22 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hoensefoedder_og_guleroedder.Controllers
 {
-    
-
-[ApiController]
-[Route("api/[controller]")]
-public class TemperatureController : ControllerBase
-{
-    private TemperatureLogic _temperatureLogic = new TemperatureLogic();
-    
-    private Random _random = new Random();
-    
-    [HttpGet]
-    public IActionResult GetTemperature()
+    /// <summary>
+    /// Returns the data relating to the air temperature.
+    /// </summary>
+    [ApiController]
+    [Route("api/[controller]")]
+    public class TemperatureController : ControllerBase
     {
-        return Ok(_temperatureLogic.GetTemperature());
+        private TemperatureLogic _temperatureLogic = new TemperatureLogic();
+        
+        private Random _random = new Random();
+        
+        [HttpGet]
+        public IActionResult GetTemperature()
+        {
+            return Ok(_temperatureLogic.GetTemperature());
+        }
     }
-}
-
-
 }
