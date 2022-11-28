@@ -9,9 +9,10 @@ namespace Hoensefoedder_og_guleroedder.Logic;
 
 public class TemperatureLogic{
     
-    private Random _random = new Random();
-    
-    
+    /// <summary>
+    /// Gets the temperature from the TemperatureTask, calculates the average and returns the value
+    /// </summary>
+    /// <returns>A list of temperatures from the air sensors</returns>
     public List<SensorResponse> GetTemperature()
     {
         List<SensorResponse> response = new List<SensorResponse>();
