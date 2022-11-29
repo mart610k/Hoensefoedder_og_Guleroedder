@@ -2,10 +2,12 @@
     <string name="app_name">Hønsefødder og Gulerødder</string>
     <string name="overview">Oversigt</string>
     <string name="temperature">Temperatur</string>
+    <string name="humidity">Fugtighed</string>
     <string name="inside">Indenfor</string>
     <string name="outside">Udenfor</string>
     <string name="high">Høj</string>
     <string name="low">Lav</string>
     <string name="ok">OK</string>
-    <string name="TEMPERATURE">° Celcius</string>
+    <string name="TEMPERATURE">° Celsius</string>
+    <string name="HUMIDITY">%</string>
 </resources>
