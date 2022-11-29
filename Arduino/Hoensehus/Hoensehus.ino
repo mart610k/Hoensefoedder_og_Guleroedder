@@ -67,8 +67,10 @@ void setup() {
   dhtoutside.begin();
 }
 
-float getDHTTemperature(DHT dht){
-  return dht.readTemperature();
+// get both data from the sensor and save it into the given array.
+void getDHTTemperatureAndHumidity(float (& data)[2],  DHT dht){
+  data[0] = dht.readTemperature();
+  data[1] = dht.readHumidity();
 }
 
 
@@ -93,7 +95,7 @@ void loop() {
       if (c == '\n' && currentLineIsBlank) {
         Serial.println(endpoint);
         
-        if(endpoint == "/temperature"){
+        if(endpoint == "/dht"){
           
          client.println("HTTP/1.1 200 OK");
         client.println("Content-Type: application/json");
@@ -101,11 +103,22 @@ void loop() {
         client.println();
         String response = "[";
         
-        response.concat("{\"location\": \"INSIDE\", \"value\":"); 
-        response.concat(getDHTTemperature(dhtinside));
+        response.concat("{\"location\": \"INSIDE\", \"temperature\":");
+        float data[2]; 
+        getDHTTemperatureAndHumidity(data,dhtinside); 
+        response.concat(data[0]);
+        response.concat(", \"humidity\": ");
+        response.concat(data[1]);
+        response.concat("");
         response.concat("},");
-        response.concat("{\"location\": \"OUTSIDE\", \"value\":"); 
-        response.concat(getDHTTemperature(dhtoutside));
+        response.concat("{\"location\": \"OUTSIDE\", \"temperature\":");
+         
+        getDHTTemperatureAndHumidity(data,dhtoutside); 
+        response.concat(data[0]);
+        response.concat(", \"humidity\": ");
+        response.concat(data[1]);
+        response.concat("");
+        
         response.concat("}]");
         client.println(response);
          break; 
@@ -157,7 +170,7 @@ void loop() {
   } // end if (client
 }
 
-
+//Decodes the path and returns the result.
 String DecodeEndpointPath(String requestLine){
   if(requestLine.startsWith("GET")){
     int index = requestLine.indexOf(" ");

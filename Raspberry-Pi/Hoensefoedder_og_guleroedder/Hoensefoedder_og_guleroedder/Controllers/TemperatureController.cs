@@ -15,8 +15,6 @@ namespace Hoensefoedder_og_guleroedder.Controllers
     {
         private TemperatureLogic _temperatureLogic = new TemperatureLogic();
         
-        private Random _random = new Random();
-        
         [HttpGet]
         public IActionResult GetTemperature()
         {

@@ -5,9 +5,17 @@ using NUnit.Framework;
 
 namespace Hoensefoedder_og_guleroedder_test;
 
-public class TemperatureLogicTests
+public class TestCommonClass : CommonLogic
 {
-    private TemperatureLogic _temperatureLogic = new TemperatureLogic();
+    public TestCommonClass()
+    {
+        
+    }
+}
+
+public class CommonLogicTests
+{
+    private TestCommonClass _testCommonClass = new TestCommonClass();
 
     [TestCase(new float[] {0,0,0,0,0,0,0,0,0,0}, 0, TestName = "Test")]
     [TestCase(new float[] {500,-270,1,1,1,1,1,1,1,1},1,TestName = "Name")]
@@ -19,7 +27,7 @@ public class TemperatureLogicTests
     {
         //SETUP + ACT
         List<float> list = new List<float>(temperatures);
-        float actual = _temperatureLogic.FindAverageTemperature(list);
+        float actual = _testCommonClass.FindAverageFromList(list);
 
 
         //VERIFY
