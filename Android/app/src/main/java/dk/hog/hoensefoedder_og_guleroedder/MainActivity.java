@@ -7,9 +7,11 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import dk.hog.hoensefoedder_og_guleroedder.classes.Humidity;
-import dk.hog.hoensefoedder_og_guleroedder.classes.Temperature;
+import dk.hog.hoensefoedder_og_guleroedder.classes.HumidityService;
+import dk.hog.hoensefoedder_og_guleroedder.classes.TemperatureService;
+import dk.hog.hoensefoedder_og_guleroedder.classes.WaterCapacityService;
 import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
 
  public class MainActivity extends AppCompatActivity {
@@ -19,8 +21,9 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Initialising the Temperature class
-        Temperature temperatureClass = new Temperature(this);
-        Humidity humidityClass = new Humidity(this);
+        TemperatureService temperatureServiceClass = new TemperatureService(this);
+        HumidityService humidityServiceClass = new HumidityService(this);
+        WaterCapacityService waterCapacityService = new WaterCapacityService(this);
 
         // Initialization of LocationType
         String location = LocationType.INSIDE.toString();
@@ -35,6 +38,8 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         TextView humidityIndicatorIn = findViewById(R.id.insideHumidityIndicator);
         TextView humidityOut = findViewById(R.id.outsideHumidity);
         TextView humidityIndicatorOut = findViewById(R.id.outsideHumidityIndicator);
+        TextView waterLevel = findViewById(R.id.capacity);
+        TextView waterLevelIndicator = findViewById(R.id.capacityIndicator);
         //endregion
 
         //region Thread setup
@@ -44,7 +49,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
             // Ensuring the thread always runs
             while (true) {
                 // Get the Temperature data in a JsonArray
-                JSONArray temperatureArray = temperatureClass.GetTemp();
+                JSONArray temperatureArray = temperatureServiceClass.GetTemp();
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -53,10 +58,10 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
                             if(temperatureArray != null) {
                                 for(int i = 0; i < temperatureArray.length(); i++) {
                                     if(temperatureArray.getJSONObject(i).get("location").equals(location)){
-                                        temperatureClass.ShowOnGUI(temperatureArray.getJSONObject(i).get("value"),tempIn,tempIndicatorIn);
+                                        temperatureServiceClass.ShowOnGUI(temperatureArray.getJSONObject(i).get("value"),tempIn,tempIndicatorIn);
                                     }
                                     else {
-                                        temperatureClass.ShowOnGUI(temperatureArray.getJSONObject(i).get("value"),tempOut,tempIndicatorOut);
+                                        temperatureServiceClass.ShowOnGUI(temperatureArray.getJSONObject(i).get("value"),tempOut,tempIndicatorOut);
                                     }
                                 }
                             }
@@ -76,7 +81,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         // Humidity Thread Setup
         Thread humidityThread = new Thread(() -> {
             while (true) {
-                JSONArray humidityArray = humidityClass.GetHumidity();
+                JSONArray humidityArray = humidityServiceClass.GetHumidity();
                 this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -84,9 +89,9 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
                             if(humidityArray != null) {
                                 for(int i = 0; i < humidityArray.length(); i++){
                                     if(humidityArray.getJSONObject(i).get("location").equals(location)){
-                                        humidityClass.ShowOnGUI(humidityArray.getJSONObject(i).get("value"),humidityIn,humidityIndicatorIn);
+                                        humidityServiceClass.ShowOnGUI(humidityArray.getJSONObject(i).get("value"),humidityIn,humidityIndicatorIn);
                                     } else {
-                                        humidityClass.ShowOnGUI(humidityArray.getJSONObject(i).get("value"),humidityOut,humidityIndicatorOut);
+                                        humidityServiceClass.ShowOnGUI(humidityArray.getJSONObject(i).get("value"),humidityOut,humidityIndicatorOut);
                                     }
                                 }
                             }
@@ -104,11 +109,30 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
                 }
             }
         });
+
+        Thread waterLevelThread = new Thread(() ->{
+            while (true){
+                JSONObject waterLevelObject = waterCapacityService.GetWaterLevel();
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if(waterLevelObject != null) {
+                                waterCapacityService.ShowOnGUI(waterLevelObject.get("min"),waterLevelObject.get("max"),waterLevel,waterLevelIndicator);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
         //endregion
 
         //region Starting of threads
         temperatureThread.start();
         humidityThread.start();
+        waterLevelThread.start();
         //endregion
     }
 }
