@@ -21,6 +21,7 @@ namespace Hoensefoedder_og_guleroedder
                 {
                     services.AddSwaggerGen();
                     services.AddHostedService<DHTTask>();
+                    services.AddHostedService<WaterTankTask>();
                 });
     }
 }
