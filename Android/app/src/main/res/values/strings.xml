@@ -3,11 +3,16 @@
     <string name="overview">Oversigt</string>
     <string name="temperature">Temperatur</string>
     <string name="humidity">Fugtighed</string>
+    <string name="capacity">Vand Kapacitet</string>
+    <string name="watertank">Tank</string>
     <string name="inside">Indenfor</string>
     <string name="outside">Udenfor</string>
     <string name="high">Høj</string>
     <string name="low">Lav</string>
     <string name="ok">OK</string>
+    <string name="full">Fuld</string>
+    <string name="empty">Tom</string>
     <string name="TEMPERATURE">° Celsius</string>
-    <string name="HUMIDITY">%</string>
+    <string name="PERCENTILE">%</string>
+    <string name="FROMTO">-</string>
 </resources>
