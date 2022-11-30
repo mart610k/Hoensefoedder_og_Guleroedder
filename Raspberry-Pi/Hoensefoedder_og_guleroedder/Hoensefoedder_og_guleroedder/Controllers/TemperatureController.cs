@@ -15,6 +15,10 @@ namespace Hoensefoedder_og_guleroedder.Controllers
     {
         private TemperatureLogic _temperatureLogic = new TemperatureLogic();
         
+        /// <summary>
+        /// Gets the temperatures from the sensors.
+        /// </summary>
+        /// <returns>A list of average temperatures</returns>
         [HttpGet]
         public IActionResult GetTemperature()
         {

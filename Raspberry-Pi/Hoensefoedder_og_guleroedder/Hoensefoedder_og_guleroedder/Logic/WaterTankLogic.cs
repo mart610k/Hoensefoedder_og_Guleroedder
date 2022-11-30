@@ -7,7 +7,7 @@ namespace Hoensefoedder_og_guleroedder.Logic
 
 public class WaterTankLogic
 {
-    public WaterTankResponse GetTankCapicity()
+    public WaterTankResponse GetTankLevel()
     {
         return WaterTankTask.WaterTankResponseData;
     }

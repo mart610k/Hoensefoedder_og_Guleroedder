@@ -13,10 +13,14 @@ namespace Hoensefoedder_og_guleroedder.Controllers
     {
         private WaterTankLogic _waterTankLogic = new WaterTankLogic();
         
+        /// <summary>
+        /// Get the water tank capicity and returns it 
+        /// </summary>
+        /// <returns>Returns the data related to the tank</returns>
         [HttpGet]
-        public IActionResult GetTemperature()
+        public IActionResult GetTankLevel()
         {
-            return Ok(_waterTankLogic.GetTankCapicity());
+            return Ok(_waterTankLogic.GetTankLevel());
         }
     }
 }

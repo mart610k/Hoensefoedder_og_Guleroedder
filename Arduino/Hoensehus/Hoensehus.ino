@@ -5,9 +5,9 @@
 #define dhtInsidePin 2
 #define dhtOutsidePin 3
 
-#define waterTankOutput 43
-#define topTankSensor A14
-#define middleTankSensor A13
+#define waterTankOutput 45
+#define topTankSensor A13
+#define middleTankSensor A14
 #define deepestTankSensor A15
 
 DHT dhtinside (dhtInsidePin, DHT22);
