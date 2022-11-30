@@ -41,8 +41,6 @@ public class DHTTask : BackgroundService
 
         HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/dht");
 
-        Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
-
         List<DHTResponse> responses = await responseMessage.Content.ReadFromJsonAsync<List<DHTResponse>>();
 
         foreach (DHTResponse response in responses)
