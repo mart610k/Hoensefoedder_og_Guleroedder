@@ -1,9 +1,16 @@
  package dk.hog.hoensefoedder_og_guleroedder;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +22,7 @@ import dk.hog.hoensefoedder_og_guleroedder.classes.WaterCapacityService;
 import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
 
  public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +50,22 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         TextView waterLevelIndicator = findViewById(R.id.capacityIndicator);
         //endregion
 
+        //region Buttons
+        Button tempButton = findViewById(R.id.temperatureButton);
+        Button humidityButton = findViewById(R.id.humidityButton);
+        Button waterButton = findViewById(R.id.waterButton);
+        //endregion
+
+        //region Threads
+        Thread waterLevelThread;
+        Thread humidityThread;
+        Thread temperatureThread;
+        //endregion
+
         //region Thread setup
 
         //Temperature Thread
-        Thread temperatureThread = new Thread(() -> {
+        temperatureThread = new Thread(() -> {
             // Ensuring the thread always runs
             while (true) {
                 // Get the Temperature data in a JsonArray
@@ -79,7 +99,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         });
 
         // Humidity Thread Setup
-        Thread humidityThread = new Thread(() -> {
+        humidityThread = new Thread(() -> {
             while (true) {
                 JSONArray humidityArray = humidityServiceClass.GetHumidity();
                 this.runOnUiThread(new Runnable() {
@@ -110,7 +130,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
             }
         });
 
-        Thread waterLevelThread = new Thread(() ->{
+        waterLevelThread = new Thread(() ->{
             while (true){
                 JSONObject waterLevelObject = waterCapacityService.GetWaterLevel();
                 this.runOnUiThread(new Runnable() {
@@ -134,5 +154,35 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
         humidityThread.start();
         waterLevelThread.start();
         //endregion
+
+        //region Button Clicks
+
+        tempButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder =  new AlertDialog.Builder(v.getRootView().getContext());
+            View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.activity_temperature_info, null);
+
+            builder.setView(mView)
+                    .setPositiveButton("Tilbage", (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
+
+        humidityButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+            View mView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.activity_humidity_info,null);
+
+            builder.setView(mView)
+                    .setPositiveButton(this.getString(R.string.back), (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
+
+        waterButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+            View mView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.activity_water_capacity,null);
+
+            builder.setView(mView)
+                    .setPositiveButton(this.getString(R.string.back), (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
+        //endregion
     }
-}
+ }

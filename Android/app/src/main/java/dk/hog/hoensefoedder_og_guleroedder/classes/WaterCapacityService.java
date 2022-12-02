@@ -32,7 +32,7 @@ public class WaterCapacityService implements IExtendedGUI {
         data.setText(String.format("%.0f", Float.parseFloat(min.toString())) + context.getResources().getString(R.string.PERCENTILE) + " " +context.getResources().getString(R.string.FROMTO) + " " + String.format("%.0f", Float.parseFloat(max.toString())) + context.getResources().getString(R.string.PERCENTILE));
         if(Float.parseFloat(min.toString()) >= 95) {
             indicator.setText(R.string.full);
-            indicator.setBackgroundColor(context.getResources().getColor(R.color.green, null));
+            indicator.setBackgroundColor(context.getResources().getColor(R.color.darkGreen, null));
         }
         else if(Float.parseFloat(min.toString()) >= 60) {
             indicator.setText(R.string.ok);

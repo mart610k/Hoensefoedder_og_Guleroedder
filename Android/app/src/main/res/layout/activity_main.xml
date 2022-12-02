@@ -53,12 +53,13 @@ android:background="@color/white">
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:background="@drawable/top_bottom_borders">
 
         <TextView
             android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:text="@string/temperature"
             android:textAlignment="textStart"
             android:textSize="20sp"
@@ -66,7 +67,17 @@ android:background="@color/white">
             android:paddingStart="20dp"
             android:paddingEnd="0dp"
             android:paddingTop="10dp"
-            android:background="@drawable/top_bottom_borders"/>
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/temperatureButton"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="-3dp"
+            android:background="@drawable/border"
+            android:text="@string/info"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
     <LinearLayout
@@ -95,7 +106,7 @@ android:background="@color/white">
             android:paddingEnd="10dp"
             android:paddingStart="0dp"
             android:paddingBottom="10dp"
-            android:text="15.5° Celcius"
+            android:text="15.5° Celsius"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -141,7 +152,7 @@ android:background="@color/white">
             android:paddingEnd="10dp"
             android:paddingStart="0dp"
             android:paddingBottom="10dp"
-            android:text="5.5° Celcius"
+            android:text="5.5° Celsius"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -164,20 +175,30 @@ android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@drawable/top_bottom_borders">
 
         <TextView
             android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:text="@string/humidity"
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:paddingBottom="10dp"
             android:paddingStart="20dp"
             android:paddingEnd="0dp"
-            android:paddingTop="10dp"
-            android:background="@drawable/top_bottom_borders"/>
+            android:paddingTop="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/humidityButton"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="-3dp"
+            android:background="@drawable/border"
+            android:text="@string/info"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
     <LinearLayout
@@ -277,12 +298,13 @@ android:background="@color/white">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@drawable/top_bottom_borders">
 
         <TextView
             android:textColor="@color/black"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:text="@string/capacity"
             android:textAlignment="textStart"
             android:textSize="20sp"
@@ -290,7 +312,18 @@ android:background="@color/white">
             android:paddingStart="20dp"
             android:paddingEnd="0dp"
             android:paddingTop="10dp"
-            android:background="@drawable/top_bottom_borders"/>
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/waterButton"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="193dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="-3dp"
+            android:background="@drawable/border"
+            android:text="@string/info"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
