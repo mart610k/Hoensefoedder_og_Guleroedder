@@ -20,6 +20,12 @@ public class WaterTankTask : BackgroundService
         while (true)
         {
             await Task.Delay(5000, stoppingToken);
+            Task task = TakeReading();
+            if(await Task.WhenAny(task,Task.Delay(3000,stoppingToken)) != task)
+            {
+                Console.WriteLine("Couldn't finish task within the given time");
+                
+            }
             await TakeReading();
         }
     }
@@ -32,12 +38,18 @@ public class WaterTankTask : BackgroundService
     /// <returns>task being done</returns>
     private static async Task<Task> TakeReading()
     {
-        HttpClient client = new HttpClient();
+        try{
+            HttpClient client = new HttpClient();
 
-        HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/tank");
+            HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/tank");
 
-        WaterTankResponseData = await responseMessage.Content.ReadFromJsonAsync<WaterTankResponse>();
-
+            WaterTankResponseData = await responseMessage.Content.ReadFromJsonAsync<WaterTankResponse>();
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Failed to obtain information from Sensor");
+            Console.WriteLine(exception.Message);
+        }
         return Task.FromResult("Done");
     }
 }

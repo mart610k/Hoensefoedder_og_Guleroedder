@@ -24,7 +24,12 @@ public class DHTTask : BackgroundService
         while (true)
         {
             await Task.Delay(3000, stoppingToken);
-            await TakeReading();
+            Task task = TakeReading();
+            if(await Task.WhenAny(task,Task.Delay(3000,stoppingToken)) != task)
+            {
+                Console.WriteLine("Couldn't finish task within the given time");
+                
+            }
         }
     }
 
@@ -36,35 +41,43 @@ public class DHTTask : BackgroundService
     /// <returns>task being done</returns>
     private static async Task<Task> TakeReading()
     {
-        HttpClient client = new HttpClient();
-
-
-        HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/dht");
-
-        List<DHTResponse> responses = await responseMessage.Content.ReadFromJsonAsync<List<DHTResponse>>();
-
-        foreach (DHTResponse response in responses)
+        try
         {
-            switch (response.Location)
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage responseMessage = await client.GetAsync("http://192.168.1.10:80/dht");
+
+            List<DHTResponse> responses = await responseMessage.Content.ReadFromJsonAsync<List<DHTResponse>>();
+
+            foreach (DHTResponse response in responses)
             {
-                case LocationType.OUTSIDE:
-                    if (Outside.Count >= 10)
-                    {
-                        Outside.Dequeue();
-                    }
+                switch (response.Location)
+                {
+                    case LocationType.OUTSIDE:
+                        if (Outside.Count >= 10)
+                        {
+                            Outside.Dequeue();
+                        }
 
-                    Outside.Enqueue(response);
+                        Outside.Enqueue(response);
 
-                    break;
-                case LocationType.INSIDE:
-                    if (Inside.Count >= 10)
-                    {
-                        Inside.Dequeue();
-                    }
+                        break;
+                    case LocationType.INSIDE:
+                        if (Inside.Count >= 10)
+                        {
+                            Inside.Dequeue();
+                        }
 
-                    Inside.Enqueue(response);
-                    break;
+                        Inside.Enqueue(response);
+                        break;
+                }
             }
+
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Failed to obtain information from Sensor");
+            Console.WriteLine(exception.Message);
         }
 
         return Task.FromResult("Done");
