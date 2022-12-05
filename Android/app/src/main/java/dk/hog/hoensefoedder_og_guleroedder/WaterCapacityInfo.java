@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class WaterCapacity extends AppCompatActivity {
+public class WaterCapacityInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_water_capacity);
+        setContentView(R.layout.activity_water_capacity_info);
     }
 }

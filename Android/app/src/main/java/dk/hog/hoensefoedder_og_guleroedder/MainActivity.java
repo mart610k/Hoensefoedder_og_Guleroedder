@@ -3,14 +3,11 @@
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,7 +174,7 @@ import dk.hog.hoensefoedder_og_guleroedder.enums.LocationType;
 
         waterButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-            View mView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.activity_water_capacity,null);
+            View mView = LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.activity_water_capacity_info,null);
 
             builder.setView(mView)
                     .setPositiveButton(this.getString(R.string.back), (dialog, which) -> dialog.cancel());
