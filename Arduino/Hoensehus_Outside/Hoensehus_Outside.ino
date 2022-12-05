@@ -2,15 +2,13 @@
 #include <Ethernet.h>
 #include <DHT.h>
 
-#define dhtInsidePin 2
-#define dhtOutsidePin 3
+#define dhtOutsidePin 2
 
 #define waterTankOutput 45
 #define topTankSensor A13
 #define middleTankSensor A14
 #define deepestTankSensor A15
 
-DHT dhtinside (dhtInsidePin, DHT22);
 DHT dhtoutside (dhtOutsidePin, DHT22);
 
 byte mac[] = {
@@ -73,7 +71,6 @@ void setup() {
 
   Serial.println(Ethernet.localIP());
 
-  dhtinside.begin();
   dhtoutside.begin();
 }
 
@@ -111,25 +108,16 @@ void loop() {
           client.println("Content-Type: application/json");
           client.println("Connection: close");
           client.println();
-          String response = "[";
-          
-          response.concat("{\"location\": \"INSIDE\", \"temperature\":");
+          String response = "";
           float data[2]; 
-          getDHTTemperatureAndHumidity(data,dhtinside); 
-          response.concat(data[0]);
-          response.concat(", \"humidity\": ");
-          response.concat(data[1]);
-          response.concat("");
-          response.concat("},");
-          response.concat("{\"location\": \"OUTSIDE\", \"temperature\":");
-           
+          response.concat("{\"temperature\":");
           getDHTTemperatureAndHumidity(data,dhtoutside); 
           response.concat(data[0]);
           response.concat(", \"humidity\": ");
           response.concat(data[1]);
           response.concat("");
           
-          response.concat("}]");
+          response.concat("}");
           client.println(response);
           break; 
         }
@@ -152,11 +140,11 @@ void loop() {
           }
           else if(analogRead(middleTankSensor) > 0){
             data[0] = 60;
-            data[1] = 95;
+            data[1] = 94;
           }
           else if(analogRead(deepestTankSensor) > 0){
-            data[0] = 10;
-            data[1] = 60;
+            data[0] = 11;
+            data[1] = 59;
           }
           else {
             data[0] = 0;

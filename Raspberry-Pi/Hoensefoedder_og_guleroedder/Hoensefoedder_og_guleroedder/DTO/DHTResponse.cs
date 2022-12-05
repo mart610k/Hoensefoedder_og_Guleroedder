@@ -8,18 +8,14 @@ public class DHTResponse
     public float Temperature { get; set; }
     public float Humidity { get; set; }
     
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public LocationType Location { get; set; }
-
     public DHTResponse()
     {
     }
 
-    public DHTResponse(float temp, float humid, LocationType location)
+    public DHTResponse(float temp, float humid)
     {
         temp = Temperature;
         humid = Humidity;
-        location = Location;
     }
     
 }
