@@ -3,30 +3,16 @@
 #include <DHT.h>
 
 #define dhtInsidePin 2
-#define dhtOutsidePin 3
-
-#define waterTankOutput 45
-#define topTankSensor A13
-#define middleTankSensor A14
-#define deepestTankSensor A15
 
 DHT dhtinside (dhtInsidePin, DHT22);
-DHT dhtoutside (dhtOutsidePin, DHT22);
 
 byte mac[] = {
-  0x42, 0x39, 0x55, 0x75, 0x8E, 0xB1
+  0x42, 0x7D, 0x3C, 0x9F, 0xBA, 0xDD
 };
-
 
 
 EthernetServer server(80);
 void setup() {
-
-  pinMode(waterTankOutput,OUTPUT);
-  pinMode(deepestTankSensor, INPUT); 
-  pinMode(middleTankSensor, INPUT); 
-  pinMode(topTankSensor, INPUT); 
-
   Ethernet.init(10);
   
   // put your setup code here, to run once:
@@ -74,7 +60,6 @@ void setup() {
   Serial.println(Ethernet.localIP());
 
   dhtinside.begin();
-  dhtoutside.begin();
 }
 
 // get both data from the sensor and save it into the given array.
@@ -111,71 +96,20 @@ void loop() {
           client.println("Content-Type: application/json");
           client.println("Connection: close");
           client.println();
-          String response = "[";
+          String response = "";
           
-          response.concat("{\"location\": \"INSIDE\", \"temperature\":");
+          response.concat("{ \"temperature\":");
           float data[2]; 
           getDHTTemperatureAndHumidity(data,dhtinside); 
           response.concat(data[0]);
           response.concat(", \"humidity\": ");
           response.concat(data[1]);
           response.concat("");
-          response.concat("},");
-          response.concat("{\"location\": \"OUTSIDE\", \"temperature\":");
-           
-          getDHTTemperatureAndHumidity(data,dhtoutside); 
-          response.concat(data[0]);
-          response.concat(", \"humidity\": ");
-          response.concat(data[1]);
-          response.concat("");
-          
-          response.concat("}]");
-          client.println(response);
-          break; 
-        }
-        
-        else if(endpoint == "/tank"){
-          client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: application/json");
-          client.println("Connection: close");
-          client.println();
-
-          
-          int data[2];
-
-          digitalWrite(waterTankOutput,HIGH);
-          delay(10);
-                    
-          if(analogRead(topTankSensor) > 0){
-            data[0] = 95;
-            data[1] = 100;
-          }
-          else if(analogRead(middleTankSensor) > 0){
-            data[0] = 60;
-            data[1] = 95;
-          }
-          else if(analogRead(deepestTankSensor) > 0){
-            data[0] = 10;
-            data[1] = 60;
-          }
-          else {
-            data[0] = 0;
-            data[1] = 10;
-          }
-
-          String response = "{\"min\": ";
-          response.concat(data[0]);
-          response.concat(",\"max\": ");
-          response.concat(data[1]);
           response.concat("}");
           
-          delay(10);
-          digitalWrite(waterTankOutput,LOW);
-          
           client.println(response);
           break; 
         }
-        
         else{
           
         
