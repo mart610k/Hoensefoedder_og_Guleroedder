@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">Hoensefoedder_og_guleroedder</string>
+    <string name="app_name">Hønsefødder og Gulerødder</string>
+    <string name="overview">Oversigt</string>
+    <string name="temperature">Temperatur</string>
+    <string name="humidity">Fugtighed</string>
+    <string name="capacity">Vand Kapacitet</string>
+    <string name="watertank">Tank</string>
+    <string name="inside">Indenfor</string>
+    <string name="outside">Udenfor</string>
+    <string name="high">Høj</string>
+    <string name="low">Lav</string>
+    <string name="ok">OK</string>
+    <string name="full">Fuld</string>
+    <string name="empty">Tom</string>
+    <string name="TEMPERATURE">° Celsius</string>
+    <string name="PERCENTILE">%</string>
+    <string name="FROMTO">-</string>
+    <string name="info">Info</string>
+    <string name="limit">Grænseværdi</string>
+    <string name="temphigh">Ved 30° Celsius og over</string>
+    <string name="templow">Ved 0° Celsius og under</string>
+    <string name="oktemp">Over 0° og Under 30° Celsius</string>
+    <string name="humidhigh">Ved 70% og over</string>
+    <string name="humidok">Under 70%</string>
+    <string name="back">Tilbage</string>
+    <string name="capacityFull">95% - 100%</string>
+    <string name="capacityOk">60% - 94%</string>
+    <string name="capacityLow">11% - 59%</string>
+    <string name="capacityEmpty">0% - 10%</string>
 </resources>
