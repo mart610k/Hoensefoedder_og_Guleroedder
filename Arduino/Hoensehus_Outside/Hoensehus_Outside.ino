@@ -140,11 +140,11 @@ void loop() {
           }
           else if(analogRead(middleTankSensor) > 0){
             data[0] = 60;
-            data[1] = 95;
+            data[1] = 94;
           }
           else if(analogRead(deepestTankSensor) > 0){
-            data[0] = 10;
-            data[1] = 60;
+            data[0] = 11;
+            data[1] = 59;
           }
           else {
             data[0] = 0;
