@@ -19,12 +19,12 @@
     <string name="limit">Grænseværdi</string>
     <string name="temphigh">Ved 30° Celsius og over</string>
     <string name="templow">Ved 0° Celsius og under</string>
-    <string name="oktemp">Mellem 0° - 30° Celsius</string>
+    <string name="oktemp">Over 0° og Under 30° Celsius</string>
     <string name="humidhigh">Ved 70% og over</string>
     <string name="humidok">Under 70%</string>
     <string name="back">Tilbage</string>
     <string name="capacityFull">95% - 100%</string>
-    <string name="capacityOk">60% - 95%</string>
-    <string name="capacityLow">10% - 60%</string>
+    <string name="capacityOk">60% - 94%</string>
+    <string name="capacityLow">11% - 59%</string>
     <string name="capacityEmpty">0% - 10%</string>
 </resources>
